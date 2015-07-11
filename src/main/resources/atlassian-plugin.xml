@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+    <param name="plugin-icon">images/pluginIcon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+  </plugin-info>
+  <!-- add our i18n resource -->
+  <resource type="i18n" name="i18n" location="StashGitLFS"/>
+  <!-- import from the product container -->
+  <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties"/>
+  <component-import key="repositorySupplier" interface="com.atlassian.stash.repository.RepositorySupplier"/>
+  <component-import key="projectSupplier" interface="com.atlassian.stash.project.ProjectSupplier"/>
+  <component-import key="appPropService" interface="com.atlassian.stash.server.ApplicationPropertiesService"/>
+  <component-import key="authContext" interface="com.atlassian.stash.user.StashAuthenticationContext"/>
+  <component-import key="permissionService" interface="com.atlassian.stash.user.PermissionService"/>
+  <rest name="Lfs" i18n-name-key="lfs.name" key="lfs" path="/lfs" version="none">
+    <description key="lfs.description">Git LFS API plugin for Stash</description>
+  </rest>
+</atlassian-plugin>
