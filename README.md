@@ -1,6 +1,6 @@
 # What this is
 
-A very early version of an Git LFS (https://git-lfs.github.com/) REST API interface plugin for Atlassian Stash (https://www.atlassian.com/software/stash).
+A very early version of an Git LFS (https://git-lfs.github.com/) REST API interface plugin for Atlassian BitBucket (https://www.atlassian.com/software/bitbucket).
 
 # How to use this
 
@@ -9,16 +9,16 @@ A very early version of an Git LFS (https://git-lfs.github.com/) REST API interf
 This is a very early release! Use at your own risk!
 
 * Install git-lfs (see https://git-lfs.github.com/ for details)
-* Download (see releases) and install the plugin in your stash instance
+* Download (see releases) and install the plugin in your bitbucket instance
 * Init LFS and add the LFS endpoint to your repo
 ```
 git lfs init
-git config remote.origin.lfsurl "https://your.server.com/stash/rest/lfs/<project>/<repo>"
+git config remote.origin.lfsurl "https://your.server.com/bitbucket/rest/lfs/1.0/<project>/<repo>"
 ```
 * Add files to track by LFS ```git lfs track "*.tar.gz"```
 * Commit, push, whatever
 
-Cloning a repo with LFS content is currently not possible sind the default LFS url is different from this plugins REST url (see TODO).
+Cloning a repo with LFS content is currently not possible since the default LFS url is different from this plugins REST url (see TODO).
 
 ## As a plugin developer
 
@@ -40,8 +40,8 @@ There are a lot of TODOs. I definitely can not do all of them by myself, so plea
 * Check batch API
   * (DONE) push
   * pull (in my tests client did not use batch even if told to do so...)
-* Hook to delete the lfs repo if stash repo is deleted
-* Make 404 etc. empty and not return massive stash thing
+* Hook to delete the lfs repo if bitbucket repo is deleted
+* Make 404 etc. empty and not return massive bitbucket thing
 * Move path from /rest... to default LFS path ...repo.git/info/lfs
   * I am not sure if this is possible at all
 * Add SSH implementation (https://github.com/github/git-lfs/tree/master/docs/api#authentication)

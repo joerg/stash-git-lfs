@@ -1,4 +1,4 @@
-package it.at.oiml.stash.lfs.rest;
+package it.at.oiml.bitbucket.lfs.rest;
 
 import org.junit.Test;
 import org.junit.After;
@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.mockito.Mockito;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import at.oiml.stash.lfs.rest.Lfs;
-import at.oiml.stash.lfs.rest.LfsModel;
+import at.oiml.bitbucket.lfs.rest.Lfs;
+import at.oiml.bitbucket.lfs.rest.LfsModel;
 import org.apache.wink.client.Resource;
 import org.apache.wink.client.RestClient;
 

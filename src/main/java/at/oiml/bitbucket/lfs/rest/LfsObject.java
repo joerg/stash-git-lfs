@@ -1,4 +1,4 @@
-package at.oiml.stash.lfs.rest;
+package at.oiml.bitbucket.lfs.rest;
 import java.io.File;
 
 public class LfsObject {

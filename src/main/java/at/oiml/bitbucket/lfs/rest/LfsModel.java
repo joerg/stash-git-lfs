@@ -1,4 +1,4 @@
-package at.oiml.stash.lfs.rest;
+package at.oiml.bitbucket.lfs.rest;
 
 import com.google.gson.annotations.*;
 
@@ -51,11 +51,11 @@ public class LfsModel {
       public LfsHypermediaLink(String type, String baseUrl, String project, String repo, String oid)
       {
         if (type == "upload" || type == "download")
-            this.href = baseUrl + "/rest/lfs/" + project + "/" + repo + "/" + type + "/" + oid;
+            this.href = baseUrl + "/rest/lfs/1.0/" + project + "/" + repo + "/" + type + "/" + oid;
         else if (type == "verify")
-            this.href = baseUrl + "/rest/lfs/" + project + "/" + repo + "/" + type;
+            this.href = baseUrl + "/rest/lfs/1.0/" + project + "/" + repo + "/" + type;
         else if ( type == "self" )
-            this.href = baseUrl + "/rest/lfs/" + project + "/" + repo;
+            this.href = baseUrl + "/rest/lfs/1.0/" + project + "/" + repo;
       }
     }
   }

@@ -1,4 +1,4 @@
-package at.oiml.stash.lfs.rest;
+package at.oiml.bitbucket.lfs.rest;
 
 public class BatchLfsObject {
   private LfsObject[] objects;

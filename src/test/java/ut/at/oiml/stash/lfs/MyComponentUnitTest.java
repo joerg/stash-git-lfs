@@ -1,8 +1,8 @@
-// package ut.at.oiml.stash.lfs;
+// package ut.at.oiml.bitbucket.lfs;
 //
 // import org.junit.Test;
-// import at.oiml.stash.lfs.MyPluginComponent;
-// import at.oiml.stash.lfs.MyPluginComponentImpl;
+// import at.oiml.bitbucket.lfs.MyPluginComponent;
+// import at.oiml.bitbucket.lfs.MyPluginComponentImpl;
 //
 // import static org.junit.Assert.assertEquals;
 //

@@ -9,15 +9,23 @@
     <param name="plugin-logo">images/pluginLogo.png</param>
   </plugin-info>
   <!-- add our i18n resource -->
-  <resource type="i18n" name="i18n" location="StashGitLFS"/>
+  <resource type="i18n" name="i18n" location="BitBucketLfs"/>
+  <!-- add our web resources -->
+  <web-resource key="BitBucketLfs-resources" name="BitBucketLfs Web Resources">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <resource type="download" name="BitBucketLfs.css" location="/css/BitBucketLfs.css"/>
+    <resource type="download" name="BitBucketLfs.js" location="/js/BitBucketLfs.js"/>
+    <resource type="download" name="images/" location="/images"/>
+    <context>BitBucketLfs</context>
+  </web-resource>
   <!-- import from the product container -->
   <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties"/>
-  <component-import key="repositorySupplier" interface="com.atlassian.stash.repository.RepositorySupplier"/>
-  <component-import key="projectSupplier" interface="com.atlassian.stash.project.ProjectSupplier"/>
-  <component-import key="appPropService" interface="com.atlassian.stash.server.ApplicationPropertiesService"/>
-  <component-import key="authContext" interface="com.atlassian.stash.user.StashAuthenticationContext"/>
-  <component-import key="permissionService" interface="com.atlassian.stash.user.PermissionService"/>
-  <rest name="Lfs" i18n-name-key="lfs.name" key="lfs" path="/lfs" version="none">
-    <description key="lfs.description">Git LFS API plugin for Stash</description>
+  <component-import key="repositorySupplier" interface="com.atlassian.bitbucket.repository.RepositorySupplier"/>
+  <component-import key="projectSupplier" interface="com.atlassian.bitbucket.project.ProjectSupplier"/>
+  <component-import key="appPropService" interface="com.atlassian.bitbucket.server.ApplicationPropertiesService"/>
+  <component-import key="authContext" interface="com.atlassian.bitbucket.auth.AuthenticationContext"/>
+  <component-import key="permissionService" interface="com.atlassian.bitbucket.permission.PermissionService"/>
+  <rest name="Lfs" i18n-name-key="lfs.name" key="lfs" path="/lfs" version="1.0">
+    <description key="lfs.description">The Lfs Plugin</description>
   </rest>
 </atlassian-plugin>

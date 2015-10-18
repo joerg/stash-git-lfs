@@ -1,15 +1,17 @@
-package at.oiml.stash.lfs.rest;
+package at.oiml.bitbucket.lfs.rest;
 
-import com.atlassian.stash.repository.Repository;
-import com.atlassian.stash.repository.RepositorySupplier;
-import com.atlassian.stash.project.Project;
-import com.atlassian.stash.project.ProjectSupplier;
-import com.atlassian.stash.server.ApplicationPropertiesService;
-import com.atlassian.stash.user.StashUser;
+import com.atlassian.bitbucket.repository.Repository;
+import com.atlassian.bitbucket.repository.RepositorySupplier;
+import com.atlassian.bitbucket.project.Project;
+import com.atlassian.bitbucket.project.ProjectSupplier;
+import com.atlassian.bitbucket.server.ApplicationPropertiesService;
+import com.atlassian.bitbucket.user.UserService;
+import com.atlassian.bitbucket.user.ApplicationUser;
 
-import com.atlassian.stash.user.StashAuthenticationContext;
-import com.atlassian.stash.user.Permission;
-import com.atlassian.stash.user.PermissionService;
+
+import com.atlassian.bitbucket.auth.AuthenticationContext;
+import com.atlassian.bitbucket.permission.Permission;
+import com.atlassian.bitbucket.permission.PermissionService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -36,7 +38,7 @@ public class Lfs {
   private final File home;
   private final String lfsStore;
   private final RepositorySupplier repoSupplier;
-  private final StashUser stashUser;
+  private final ApplicationUser bitbucketUser;
   private final PermissionService permissionService;
   private final ProjectSupplier projectSupplier;
   private final String baseUrl;
@@ -45,7 +47,7 @@ public class Lfs {
   private final static String contentType = "application/vnd.git-lfs+json";
   public Lfs(RepositorySupplier repoSupplier,
              ApplicationPropertiesService appPropService,
-             StashAuthenticationContext authContext,
+             AuthenticationContext authContext,
              PermissionService permissionService,
              ProjectSupplier projectSupplier)
   {
@@ -53,7 +55,7 @@ public class Lfs {
     this.appPropService = appPropService;
     this.home = appPropService.getDataDir();
     this.lfsStore = appPropService.getDataDir()+"/lfs";
-    this.stashUser = authContext.getCurrentUser();
+    this.bitbucketUser = authContext.getCurrentUser();
     this.permissionService = permissionService;
     this.projectSupplier = projectSupplier;
     this.baseUrl = appPropService.getBaseUrl().toString();
@@ -134,12 +136,13 @@ public class Lfs {
     if (!userCanRead(project, repo)) {
       return Response.status(404).build();
     }
-    // Is this correct? Thats how I understand the API docs, but downloading should be possible with read
-    if (userCanRead(project, repo) || !userCanWrite(project, repo)) {
-      return Response.status(403).build();
-    }
+    // return 403 if user can read but not write AND operation is upload
+    // if (userCanRead(project, repo) && !userCanWrite(project, repo)) {
+    //  return Response.status(403).build();
+    // }
 
     LfsModel output = new LfsModel(baseUrl, project, repo, obj.getOid(), obj.getSize());
+
     if (obj.existsIn(repoStore(project, repo))) {
       return Response.ok(gson.toJson(output)).status(200).build();
     } else {
@@ -199,11 +202,11 @@ public class Lfs {
     // No access to push changes, triggers 403 according to API docs
     if (!userCanWrite(project, repo)) {
       return Response.status(403).build();
-
     }
 
     try {
       String filePath = repoStore(project,repo);
+
       File dir = new File(filePath + "/" + oidStore(oid));
       dir.getParentFile().mkdirs();
 
@@ -257,8 +260,8 @@ public class Lfs {
     Repository theRepo = repoSupplier.getBySlug(project, repo);
     Project theProject = projectSupplier.getByKey(project);
 
-    boolean canProject = permissionService.hasProjectPermission(stashUser, theProject, projPerm);
-    boolean canRepo = permissionService.hasRepositoryPermission(stashUser, theRepo, repoPerm);
+    boolean canProject = permissionService.hasProjectPermission(bitbucketUser, theProject, projPerm);
+    boolean canRepo = permissionService.hasRepositoryPermission(bitbucketUser, theRepo, repoPerm);
 
     return (canProject || canRepo);
   }
